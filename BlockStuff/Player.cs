@@ -13,13 +13,17 @@ public class Player : MonoBehaviour {
     public float maxSpeed = 5f;
     public float forwardSpeed = 1f;
 
+    public GameObject animExplosion;
+     
+
 
 
     public AudioSource playerAudioSource;
     public AudioClip playerFlap;
     public AudioClip playerCrash;
     public AudioClip playerLight;
-    public AudioClip gameMusic;
+
+    bool playExplosion;
 
 
 
@@ -27,10 +31,16 @@ public class Player : MonoBehaviour {
 
     void Awake()    {
         PlayerAlive.value = true;
-        playerAudioSource.PlayOneShot(gameMusic, 0.1F);  
+        animExplosion.GetComponent<Animator>().enabled = false;
+        animExplosion.transform.localScale = Vector3.zero;
+
     }
 
     void Update()    {
+        if(playExplosion) {
+                    animExplosion.GetComponent<Animator>().enabled = true;
+                      animExplosion.transform.localScale = new Vector3(1,1,1);
+        }
 
         if(Input.GetMouseButtonDown(0)) {
             didFlap = true;
@@ -80,9 +90,23 @@ public class Player : MonoBehaviour {
            
            playerAudioSource.PlayOneShot(playerCrash);
            Debug.Log("GAME OVER - player");
-           PlayerAlive.value = false;
-            
-           
+           playExplosion = true;
+
+           StartCoroutine(PlayerDied());           
         }
     }
+    void playerExplode() {
+        transform.localScale = Vector3.zero;
+        animExplosion.transform.localScale = new Vector3(1,1,1);
+        animExplosion.GetComponent<Animator>().enabled = true;
+
+    }
+        IEnumerator PlayerDied() {
+
+        yield return new WaitForSeconds(0.4f);
+        print("yielding");
+        PlayerAlive.value = false;
+    
+    }
+
 }

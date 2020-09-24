@@ -5,8 +5,12 @@ using UnityEngine;
 public class CloudMover : MonoBehaviour
 {
 
-    public Transform blockGenerator;
+    Transform blockGenerator;
     Vector3 moveSpeed;
+
+    void Awake() {
+        blockGenerator = GameObject.Find("BlockGenerator").transform;
+    }
 
     public void SpawnCloud(Transform blockGenerator) {
 

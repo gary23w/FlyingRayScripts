@@ -42,6 +42,23 @@ public class Store : MonoBehaviour
     public Color CUSTOMSKINTHREE;
     public GameObject CUSTOMSKINTHREEOBJECT;
     public GameObject isPurchasedc3Text;
+    public Color SPECIALSKINONE;
+    public GameObject SPECIALSKINONEOBJECT;
+    public GameObject isPurchasedSpecialSkinOne;
+    public GameObject SPECIALSKINONEOBJECTANIM;
+    public Color SPECIALSKINTWO;
+    public GameObject SPECIALSKINTWOOBJECT;
+    public GameObject isPurchasedSpecialSkinTwo;
+    public GameObject SPECIALSKINTWOOBJECTANIM;
+    public Color SPECIALSKINTHREE;
+    public GameObject SPECIALSKINTHREEOBJECT;
+    public GameObject isPurchasedSpecialSkinThree;
+    public GameObject SPECIALSKINTHREEOBJECTANIM;
+
+    public GameObject MAIN;
+    public GameObject Bat;
+    public GameObject Onion;
+    public GameObject Bear;
 
 
 
@@ -54,49 +71,13 @@ public class Store : MonoBehaviour
 
     public FloatVariable highScore;
 
-
-
     void Awake() {
-            StopAnimations();
-            updateItemText();
-            switch(PlayerPrefs.GetInt("WearingThisSkin")) {
-                case 1:
-                isPurchasedRedText.GetComponent<UnityEngine.UI.Text>().text = "";
-                break;
-                case 2:
-                isPurchasedYellowText.GetComponent<UnityEngine.UI.Text>().text = "";
-                break;
-                case 3:
-                isPurchasedPurpleText.GetComponent<UnityEngine.UI.Text>().text = "";
-                break;
-                case 4:
-                isPurchasedGreenText.GetComponent<UnityEngine.UI.Text>().text = "";
-                break;
-                case 5:
-                isPurchasedBlueText.GetComponent<UnityEngine.UI.Text>().text = "";
-                break;
-                case 6:
-                isPurchasedCyanText.GetComponent<UnityEngine.UI.Text>().text = "";
-                break;
-                case 7:
-                isPurchasedGreyText.GetComponent<UnityEngine.UI.Text>().text = "";
-                break;
-                case 8:
-                isPurchasedWhiteText.GetComponent<UnityEngine.UI.Text>().text = "";
-                break;
-                case 9:
-                isPurchasedBlackText.GetComponent<UnityEngine.UI.Text>().text = "";
-                break;
-                case 10:
-                isPurchasedc1Text.GetComponent<UnityEngine.UI.Text>().text = "";
-                break;
-                case 11:
-                isPurchasedc2Text.GetComponent<UnityEngine.UI.Text>().text = "";
-                break;
-                case 12:
-                isPurchasedc3Text.GetComponent<UnityEngine.UI.Text>().text = "";
-                break;
-            }
+        StopAnimations();
+        UpdateAndAwake();
+    }
+    void Update() {
+        whichSkin();
+        UpdateAndAwake();
     }
 
     public void turnRed() {
@@ -339,6 +320,63 @@ public class Store : MonoBehaviour
              notEnoughLight.transform.localScale = new Vector3(1,1,1);
         }
     }
+        public void purchaseSpecialOne() {
+        var getPlayer = player.GetComponent<SpriteRenderer>();
+        if(PlayerPrefs.GetInt("PurchasedSpecialOne") == 1) {
+                    specialSwitch(1);
+                    PlayerPrefs.SetInt("WearingThisSkin", 13);
+                    updateItemText();
+                    isPurchasedSpecialSkinOne.GetComponent<UnityEngine.UI.Text>().text = "";
+                    centerStage(13);
+        }
+        else if(light.value >= 100) {
+        specialSwitch(1);
+        centerStage(13);
+        PlayerPrefs.SetInt("PurchasedSpecialOne", 1);
+        PlayerPrefs.SetInt("WearingThisSkin", 13);
+        spentLightTwoHundred();
+        } else {
+             notEnoughLight.transform.localScale = new Vector3(1,1,1);
+        }
+    }
+    public void purchaseSpecialTwo() {
+        var getPlayer = player.GetComponent<SpriteRenderer>();
+        if(PlayerPrefs.GetInt("PurchasedSpecialTwo") == 1) {
+                    specialSwitch(2);
+                    PlayerPrefs.SetInt("WearingThisSkin", 14);
+                    updateItemText();
+                    isPurchasedSpecialSkinTwo.GetComponent<UnityEngine.UI.Text>().text = "";
+                    centerStage(14);
+        }
+        else if(light.value >= 100) {
+        specialSwitch(2);
+        centerStage(14);
+        PlayerPrefs.SetInt("PurchasedSpecialTwo", 1);
+        PlayerPrefs.SetInt("WearingThisSkin", 14);
+        spentLightTwoHundred();
+        } else {
+             notEnoughLight.transform.localScale = new Vector3(1,1,1);
+        }
+    }
+    public void purchaseSpecialThree() {
+        var getPlayer = player.GetComponent<SpriteRenderer>();
+        if(PlayerPrefs.GetInt("PurchasedSpecialThree") == 1) {
+                    specialSwitch(1);
+                    PlayerPrefs.SetInt("WearingThisSkin", 15);
+                    updateItemText();
+                    isPurchasedSpecialSkinThree.GetComponent<UnityEngine.UI.Text>().text = "";
+                    centerStage(15);
+        }
+        else if(light.value >= 100) {
+        specialSwitch(3);
+        centerStage(15);
+        PlayerPrefs.SetInt("PurchasedSpecialThree", 3);
+        PlayerPrefs.SetInt("WearingThisSkin", 15);
+        spentLightTwoHundred();
+        } else {
+             notEnoughLight.transform.localScale = new Vector3(1,1,1);
+        }
+    }
     public void exitScreen(){
         storePanel.transform.localScale = Vector3.zero;
     }
@@ -402,54 +440,93 @@ public class Store : MonoBehaviour
             StopAnimations();
             StartAnimations(11);
             break;
+            case 13:
+            StopAnimations();
+            SPECIALSKINONEOBJECTANIM.transform.localScale = new Vector3(1,1,1);
+            break;
+            case 14:
+            StopAnimations();
+            SPECIALSKINTWOOBJECTANIM.transform.localScale = new Vector3(1,1,1);
+            break;
+            case 15:
+            StopAnimations();
+            SPECIALSKINTHREEOBJECTANIM.transform.localScale = new Vector3(1,1,1);
+            break;
         }
     }
     public void whichSkin() {
     var getPlayer = player.GetComponent<SpriteRenderer>();
        switch(PlayerPrefs.GetInt("WearingThisSkin")) {
             case 1:
+                    specialSwitch(4);
                     getPlayer.material.color = Color.red;
                     break;
             case 2:
+                    specialSwitch(4);
                     getPlayer.material.color = Color.yellow;
                     break;
             case 3:
+                    specialSwitch(4);
                     getPlayer.material.color = Color.magenta;
                     break;
             case 4:
+                    specialSwitch(4);
                     getPlayer.material.color = Color.green;
                     break;
             case 5:
+                    specialSwitch(4);
                     getPlayer.material.color = Color.blue;
                     break;
             case 6:
+                    specialSwitch(4);
                     getPlayer.material.color = Color.cyan;
                     break;
             case 7:
+                    specialSwitch(4);
                     getPlayer.material.color = Color.grey;
                     break;
             case 8:
+                    specialSwitch(4);
                     getPlayer.material.color = Color.white;
                     break;
             case 9:
+                    specialSwitch(4);
                     getPlayer.material.color = Color.black;
                     break;
             case 10:
+                    specialSwitch(4);
                     getPlayer.material.color = Color.red;
                     break;
             case 11:
+                    specialSwitch(4);
                     getPlayer.material.color = Color.yellow;
                     break;
             case 12:
+                    specialSwitch(4);
                     getPlayer.material.color = Color.magenta;
                     break;
+            case 13:
+                    specialSwitch(1);
+            break;
+            case 14:
+                    specialSwitch(2);
+            break;
+            case 15:
+                    specialSwitch(3);
+            break;
+            default:
+                    specialSwitch(4);
+            break;
 
        }
       
     }
     void StopAnimations() {
             for(int i = 0; i < animatedBirds.Length; i++) {
-                animatedBirds[i].GetComponent<Animator>().enabled = false;
+                if(animatedBirds[i].GetComponent<Animator>()) {
+                     animatedBirds[i].GetComponent<Animator>().enabled = false;
+                }
+               
                 animatedBirds[i].transform.localScale = Vector3.zero;
         }
     }
@@ -500,7 +577,96 @@ public class Store : MonoBehaviour
         if(PlayerPrefs.GetInt("PurchasedCustomThree") == 1) {
             isPurchasedc3Text.GetComponent<UnityEngine.UI.Text>().text = "Equip";
         }
+        if(PlayerPrefs.GetInt("PurchasedSpecialOne") == 1) {
+            isPurchasedSpecialSkinOne.GetComponent<UnityEngine.UI.Text>().text = "Equip";
+        }
+        if(PlayerPrefs.GetInt("PurchasedSpecialTwo") == 1) {
+            isPurchasedSpecialSkinTwo.GetComponent<UnityEngine.UI.Text>().text = "Equip";
+        }
+        if(PlayerPrefs.GetInt("PurchasedSpecialThree") == 1) {
+            isPurchasedSpecialSkinThree.GetComponent<UnityEngine.UI.Text>().text = "Equip";
+        }
         
     }
 
+    void specialSwitch(int num) {
+        switch(num) {
+            case 1:
+            MAIN.SetActive(false);
+            Bat.SetActive(true);
+            Onion.SetActive(false);
+            Bear.SetActive(false);
+            break;
+            case 2:
+            MAIN.SetActive(false);
+            Bat.SetActive(false);
+            Onion.SetActive(true);
+            Bear.SetActive(false);
+            break;
+            case 3:
+            MAIN.SetActive(false);
+            Bat.SetActive(false);
+            Onion.SetActive(false);
+            Bear.SetActive(true);
+            break;
+            case 4:
+            MAIN.SetActive(true);
+            Bat.SetActive(false);
+            Onion.SetActive(false);
+            Bear.SetActive(false);
+            break;
+        }
+    }
+
+    public void UpdateAndAwake() {
+            updateItemText();
+            player = GameObject.FindWithTag("Player");
+            switch(PlayerPrefs.GetInt("WearingThisSkin")) {
+                case 1:
+                isPurchasedRedText.GetComponent<UnityEngine.UI.Text>().text = "";
+                break;
+                case 2:
+                isPurchasedYellowText.GetComponent<UnityEngine.UI.Text>().text = "";
+                break;
+                case 3:
+                isPurchasedPurpleText.GetComponent<UnityEngine.UI.Text>().text = "";
+                break;
+                case 4:
+                isPurchasedGreenText.GetComponent<UnityEngine.UI.Text>().text = "";
+                break;
+                case 5:
+                isPurchasedBlueText.GetComponent<UnityEngine.UI.Text>().text = "";
+                break;
+                case 6:
+                isPurchasedCyanText.GetComponent<UnityEngine.UI.Text>().text = "";
+                break;
+                case 7:
+                isPurchasedGreyText.GetComponent<UnityEngine.UI.Text>().text = "";
+                break;
+                case 8:
+                isPurchasedWhiteText.GetComponent<UnityEngine.UI.Text>().text = "";
+                break;
+                case 9:
+                isPurchasedBlackText.GetComponent<UnityEngine.UI.Text>().text = "";
+                break;
+                case 10:
+                isPurchasedc1Text.GetComponent<UnityEngine.UI.Text>().text = "";
+                break;
+                case 11:
+                isPurchasedc2Text.GetComponent<UnityEngine.UI.Text>().text = "";
+                break;
+                case 12:
+                isPurchasedc3Text.GetComponent<UnityEngine.UI.Text>().text = "";
+                break;
+                case 13:
+                isPurchasedSpecialSkinOne.GetComponent<UnityEngine.UI.Text>().text = "";
+                break;
+                case 14:
+                isPurchasedSpecialSkinTwo.GetComponent<UnityEngine.UI.Text>().text = "";
+                break;
+                case 15:
+                isPurchasedSpecialSkinThree.GetComponent<UnityEngine.UI.Text>().text = "";
+                break;
+    }
+  }
 }

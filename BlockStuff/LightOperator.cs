@@ -18,13 +18,13 @@ public class LightOperator : MonoBehaviour
 
     public void SpawnAndSetBlockNumber(int _blockNumber, Transform _blockGenerator, bool isLit) {
 
-    blockNumber = _blockNumber;
-    blockGenerator = _blockGenerator;
-    smallLight = isLit;
-    Vector3 pos = Vector3.zero;
-    pos.x = UnityEngine.Camera.main.transform.position.x + 2.0f + blockNumber;
-    PlaceLight(pos);
-}
+                blockNumber = _blockNumber;
+                blockGenerator = _blockGenerator;
+                smallLight = isLit;
+                Vector3 pos = Vector3.zero;
+                pos.x = UnityEngine.Camera.main.transform.position.x + 2.0f + blockNumber;
+                PlaceLight(pos);
+    }
 
    void EnableRenderer() {
        GetComponent<Renderer>().enabled = true;

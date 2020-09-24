@@ -4,19 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-
-public class StartButton : MonoBehaviour
+public class birdModeStartButton : MonoBehaviour
 {
     public GameObject startButton;
     public GameObject pauseButton;
     public GameObject resume;
     public GameObject endScene;
-    public GameObject storeButton;
-    public GameObject storePanel;
     public GameObject mainScreenPanel;
     public GameObject dropDownMenuGO;
+    public GameObject newSceneButton;
     public Player player;
-    public Store store;
+    GameObject currentPlayerObject;
     public BoolVariable hardModeBool;
     public BoolVariable expertModeBool;
 
@@ -25,11 +23,31 @@ public class StartButton : MonoBehaviour
 
     void Awake() {
         Time.timeScale = 0;
-        store.whichSkin(); 
+        currentPlayerObject = GameObject.FindWithTag("Player");
+        player = currentPlayerObject.GetComponent<Player>();
+        switch(PlayerPrefs.GetInt("GameModeSelection")) {
+            case 0:
+            Debug.Log("Normal mode selected");
+            GameMode = 0;
+            dropDownMenuGO.GetComponent<Dropdown>().value = 0;
+            break;
+            case 1:
+            Debug.Log("hard mode");
+            GameMode = 1;
+            dropDownMenuGO.GetComponent<Dropdown>().value = 1;
+            break;
+            case 2:
+            Debug.Log("expert mode");
+            GameMode = 2;
+            dropDownMenuGO.GetComponent<Dropdown>().value = 2;
+            break;
+        }
         
     }
     void Update() {
          dropDownMenu(); 
+        currentPlayerObject = GameObject.FindWithTag("Player");
+        player = currentPlayerObject.GetComponent<Player>();
 
     }
     public void StartGame() {
@@ -37,7 +55,7 @@ public class StartButton : MonoBehaviour
                     player.forwardSpeed = 2.5f;
                     transform.localScale = Vector3.zero; 
                     pauseButton.transform.localScale = new Vector3 (1, 1, 1);
-                    storeButton.transform.localScale = Vector3.zero;
+                   
                     mainScreenPanel.transform.localScale = Vector3.zero;
                     dropDownMenuGO.transform.localScale = Vector3.zero;
                     StartCoroutine(waitForStart());
@@ -66,16 +84,13 @@ public class StartButton : MonoBehaviour
        resume.transform.localScale = new Vector3 (1,1,1);
        endScene.transform.localScale = new Vector3 (1,1,1);
        pauseButton.transform.localScale = Vector3.zero;
+       newSceneButton.transform.localScale = Vector3.zero;
        
    }
 
-   public void OpenStore() {
-       storePanel.transform.localScale = new Vector3 (1, 1, 1);
-   }
    public void clearMenu() {
        mainScreenPanel.transform.localScale = Vector3.zero;
        startButton.transform.localScale = Vector3.zero;
-       storeButton.transform.localScale = Vector3.zero;
        dropDownMenuGO.transform.localScale = Vector3.zero;
        
    }
@@ -88,14 +103,17 @@ public class StartButton : MonoBehaviour
             case 0:
             Debug.Log("Normal mode selected");
             GameMode = 0;
+            PlayerPrefs.SetInt("GameModeSelection", 0);
             break;
             case 1:
             Debug.Log("hard mode");
             GameMode = 1;
+            PlayerPrefs.SetInt("GameModeSelection", 1);
             break;
             case 2:
             Debug.Log("expert mode");
             GameMode = 2;
+            PlayerPrefs.SetInt("GameModeSelection", 2);
             break;
 
             
@@ -109,6 +127,9 @@ public class StartButton : MonoBehaviour
 
    public void restartScene() {
        SceneManager.LoadScene("MainScene");
+   }
+      public void restartNewScene() {
+       SceneManager.LoadScene("NewScene");
    }
 
 
