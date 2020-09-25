@@ -83,6 +83,7 @@ public class Player : MonoBehaviour {
         } else {
             angle = Mathf.Lerp(0, 50, +velocity.y / maxSpeed);
         }
+        
         }
 
         transform.rotation = Quaternion.Euler(0, 0, angle);
@@ -108,7 +109,7 @@ public class Player : MonoBehaviour {
         if(other.transform.tag == "runmode") {
             Debug.Log("RUNMODE INITIATED");
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
-            MainCamera.GetComponent<Camera>().orthographicSize = Mathf.Lerp(4.88f, 8f, Time.deltaTime * 3);
+            MainCamera.GetComponent<Camera>().orthographicSize = Mathf.Lerp(4.88f, 8f, Time.deltaTime * 2);
             running = true;
         }
         if(other.transform.tag == "flymode") {

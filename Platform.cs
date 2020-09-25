@@ -29,7 +29,7 @@ private void Awake() {
         }
         private void Move() {
                 Vector3 pos = transform.position;
-                pos.x = UnityEngine.Camera.main.transform.position.x + 100f;
+                pos.x = UnityEngine.Camera.main.transform.position.x + 90f;
                 PlacePlatform(pos);
         }
 

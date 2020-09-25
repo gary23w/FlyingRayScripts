@@ -7,23 +7,17 @@ public class audioSource : MonoBehaviour
     public GameObject playerAudioSource;
     public AudioClip gameMusic;
 
-    public FloatVariable speakerActive;
-
     public FloatVariable score;
 
     void Awake() {
+        int numMusicPlayers = FindObjectsOfType<audioSource>().Length;
          playerAudioSource.GetComponent<AudioSource>().PlayOneShot(gameMusic, 0.05f); 
-         if(speakerActive.value == 0) {
-             speakerActive.value += 1;
-             DontDestroyOnLoad(transform.gameObject);
+         Debug.Log(numMusicPlayers.ToString());
+         if(numMusicPlayers != 1) {
+              Destroy(this.gameObject);
          } else {
-             Destroy(transform.gameObject);
+              DontDestroyOnLoad(this);
          }
          
     }
-
-    private void OnDestroy() {
-        speakerActive.value = 0;
-    }
-
 }
