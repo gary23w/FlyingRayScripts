@@ -138,7 +138,7 @@ public class StartButton : MonoBehaviour
        Time.timeScale = 1f;
    }
 
-   public void restartScene() {
+   public void birdMode() {
        SceneManager.LoadScene("MainScene");
    }
       public void restartNewScene() {

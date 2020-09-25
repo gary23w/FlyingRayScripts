@@ -13,6 +13,8 @@ public class Player : MonoBehaviour {
     public float maxSpeed = 5f;
     public float forwardSpeed = 1f;
 
+    GameObject MainCamera;
+
     public GameObject animExplosion;
      
 
@@ -25,6 +27,8 @@ public class Player : MonoBehaviour {
 
     bool playExplosion;
 
+    bool running;
+
 
 
 
@@ -33,6 +37,7 @@ public class Player : MonoBehaviour {
         PlayerAlive.value = true;
         animExplosion.GetComponent<Animator>().enabled = false;
         animExplosion.transform.localScale = Vector3.zero;
+        MainCamera = GameObject.FindWithTag("MainCamera");
 
     }
 
@@ -71,11 +76,13 @@ public class Player : MonoBehaviour {
         transform.position += velocity * Time.fixedDeltaTime;
 
         float angle = 0;
+        if(!running) {
 
         if(velocity.y < 0) {
             angle = Mathf.Lerp(0, -99, -velocity.y / maxSpeed);
         } else {
             angle = Mathf.Lerp(0, 50, +velocity.y / maxSpeed);
+        }
         }
 
         transform.rotation = Quaternion.Euler(0, 0, angle);
@@ -86,14 +93,30 @@ public class Player : MonoBehaviour {
         if (collision.transform.tag == "Light") {
             playerAudioSource.PlayOneShot(playerLight);
         }
-        else if(collision.transform.tag != "Sky") {
-           
+        if(collision.transform.tag == "Floor") {
+            Debug.Log("lets start walking");
+             gameObject.GetComponent<Rigidbody2D>().gravityScale = 0.1f;
+        }
+        if(collision.transform.tag == "GroundCollider" || collision.transform.tag == "Blocks") {
            playerAudioSource.PlayOneShot(playerCrash);
            Debug.Log("GAME OVER - player");
            playExplosion = true;
-
            StartCoroutine(PlayerDied());           
         }
+    }
+    private void OnTriggerEnter2D(Collider2D other) {
+        if(other.transform.tag == "runmode") {
+            Debug.Log("RUNMODE INITIATED");
+            gameObject.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
+            MainCamera.GetComponent<Camera>().orthographicSize = Mathf.Lerp(4.88f, 8f, Time.deltaTime * 3);
+            running = true;
+        }
+        if(other.transform.tag == "flymode") {
+            gameObject.GetComponent<Rigidbody2D>().gravityScale = 0f;
+            MainCamera.GetComponent<Camera>().orthographicSize = 4.88f;
+            running = false;
+        }
+        
     }
     void playerExplode() {
         transform.localScale = Vector3.zero;
@@ -102,7 +125,6 @@ public class Player : MonoBehaviour {
 
     }
         IEnumerator PlayerDied() {
-
         yield return new WaitForSeconds(0.4f);
         print("yielding");
         PlayerAlive.value = false;

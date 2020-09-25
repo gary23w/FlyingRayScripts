@@ -10,6 +10,7 @@ bool generateBlocks = true;
 int blockNumber;
 bool smallBlock;
 
+
         public void SetBlockNumberAndSpawn(int _blockNumber, Transform _blockGenerator, bool _smallBlock) {
             blockNumber = _blockNumber;
             blockGenerator = _blockGenerator;
@@ -32,13 +33,22 @@ bool smallBlock;
 
 
     private void Move() {
-            Vector3 pos = transform.position;
-            pos.x = blockGenerator.position.x;
-            PlaceBlock(pos);
-
-  
-    
-}
+            // Vector3 pos = transform.position;
+            // pos.x = blockGenerator.position.x;
+            // PlaceBlock(pos);
+            switch(PlayerPrefs.GetInt("GameModeSelection")) {
+            case 0:
+            StartCoroutine(changeGameStyleEasy());
+            break;
+            case 1:
+            StartCoroutine(changeGameStyleHard());
+            break;
+            case 2:
+            StartCoroutine(changeGameStyleExpert());
+            break;
+        }
+        
+    }
 
     private void PlaceBlock(Vector3 pos) {
         if(smallBlock) {
@@ -57,5 +67,27 @@ bool smallBlock;
         }
     }
          transform.position = pos;
+}
+
+IEnumerator changeGameStyleEasy() {
+    yield return new WaitForSeconds(40f);
+            Vector3 pos = transform.position;
+            pos.x = blockGenerator.position.x;
+            PlaceBlock(pos);
+
+}
+IEnumerator changeGameStyleHard() {
+    yield return new WaitForSeconds(25f);
+            Vector3 pos = transform.position;
+            pos.x = blockGenerator.position.x;
+            PlaceBlock(pos);
+
+}
+IEnumerator changeGameStyleExpert() {
+    yield return new WaitForSeconds(15f);
+            Vector3 pos = transform.position;
+            pos.x = blockGenerator.position.x;
+            PlaceBlock(pos);
+
 }
 }
