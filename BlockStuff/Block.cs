@@ -6,9 +6,14 @@ public class Block : MonoBehaviour
 {
 public Transform blockGenerator;
 
+
 bool generateBlocks = true;
 int blockNumber;
 bool smallBlock;
+
+    private void Awake() {
+        blockGenerator = GameObject.Find("BlockGenerator").transform;
+    }
 
 
         public void SetBlockNumberAndSpawn(int _blockNumber, Transform _blockGenerator, bool _smallBlock) {
@@ -20,74 +25,55 @@ bool smallBlock;
             PlaceBlock(pos);
 
         }
-
-
-
         private void OnTriggerEnter2D(Collider2D collider) {
                 if(collider.tag == "BlockCleaner") {
                     Move();
                 }
         }
+            private void Move() {
+                    Vector3 pos = transform.position;
+                    pos.x = blockGenerator.transform.position.x;
+                    PlaceBlock(pos);   
+            }
 
-
-
-
-    private void Move() {
-            // Vector3 pos = transform.position;
-            // pos.x = blockGenerator.position.x;
-            // PlaceBlock(pos);
-            switch(PlayerPrefs.GetInt("GameModeSelection")) {
-            case 0:
-            StartCoroutine(changeGameStyleEasy());
-            break;
-            case 1:
-            StartCoroutine(changeGameStyleHard());
-            break;
-            case 2:
-            StartCoroutine(changeGameStyleExpert());
-            break;
+            private void PlaceBlock(Vector3 pos) {
+                if(smallBlock) {
+                    if(blockNumber % 3 == 0) {
+                    pos.y = UnityEngine.Random.Range(0.1f, -5.0f);
+                    
+                } else {
+                    pos.y = UnityEngine.Random.Range(0.1f, 7.0f);
+                }
+                } else {
+                    if(blockNumber % 3 != 0) {
+                    pos.y = UnityEngine.Random.Range(0.1f, -5.0f);
+                    
+                } else {
+                    pos.y = UnityEngine.Random.Range(0.1f, 7.0f);
+                }
+            }
+                transform.position = pos;
         }
-        
-    }
 
-    private void PlaceBlock(Vector3 pos) {
-        if(smallBlock) {
-            if(blockNumber % 3 == 0) {
-            pos.y = UnityEngine.Random.Range(0.1f, -5.0f);
-            
-        } else {
-            pos.y = UnityEngine.Random.Range(0.1f, 7.0f);
-        }
-        } else {
-            if(blockNumber % 3 != 0) {
-            pos.y = UnityEngine.Random.Range(0.1f, -5.0f);
-            
-        } else {
-            pos.y = UnityEngine.Random.Range(0.1f, 7.0f);
-        }
-    }
-         transform.position = pos;
-}
+            IEnumerator changeGameStyleEasy() {
+                yield return new WaitForSeconds(40f);
+                        Vector3 pos = transform.position;
+                        pos.x = blockGenerator.position.x;
+                        PlaceBlock(pos);
 
-IEnumerator changeGameStyleEasy() {
-    yield return new WaitForSeconds(40f);
-            Vector3 pos = transform.position;
-            pos.x = blockGenerator.position.x;
-            PlaceBlock(pos);
+            }
+            IEnumerator changeGameStyleHard() {
+                yield return new WaitForSeconds(25f);
+                        Vector3 pos = transform.position;
+                        pos.x = blockGenerator.position.x;
+                        PlaceBlock(pos);
 
-}
-IEnumerator changeGameStyleHard() {
-    yield return new WaitForSeconds(25f);
-            Vector3 pos = transform.position;
-            pos.x = blockGenerator.position.x;
-            PlaceBlock(pos);
+            }
+            IEnumerator changeGameStyleExpert() {
+                yield return new WaitForSeconds(15f);
+                        Vector3 pos = transform.position;
+                        pos.x = blockGenerator.position.x;
+                        PlaceBlock(pos);
 
-}
-IEnumerator changeGameStyleExpert() {
-    yield return new WaitForSeconds(15f);
-            Vector3 pos = transform.position;
-            pos.x = blockGenerator.position.x;
-            PlaceBlock(pos);
-
-}
+            }
 }

@@ -9,7 +9,7 @@ public class AnimationController : MonoBehaviour
     string BEAR = "isBear";
     string ONION = "isOnion";
     string BAT = "isBat";
-    string MAIN = "isMain";
+    string MAIN = "FurJump";
 
     void Update()
     {
@@ -22,7 +22,7 @@ public class AnimationController : MonoBehaviour
           if(PlayerPrefs.GetInt("WearingThisSkin") == 13) {
             isBatAnim();
         } else {
-            isMainAnim();
+            Debug.Log("Animations is everything");
         }
         
     }
@@ -37,7 +37,7 @@ public class AnimationController : MonoBehaviour
     void isBatAnim() {
     animator.SetTrigger(BAT);
     }
-    void isMainAnim() {
+    public void jumpFury() {
     animator.SetTrigger(MAIN);
     }
 }

@@ -22,6 +22,8 @@ public class StartButton : MonoBehaviour
     public Store store;
     public BoolVariable hardModeBool;
     public BoolVariable expertModeBool;
+    public FloatVariable section;
+    
 
     int GameMode = 0;
     
@@ -64,6 +66,7 @@ public class StartButton : MonoBehaviour
                     storeButton.transform.localScale = Vector3.zero;
                     mainScreenPanel.transform.localScale = Vector3.zero;
                     dropDownMenuGO.transform.localScale = Vector3.zero;
+                    section.value = 0;
                     StartCoroutine(waitForStart());
         if (GameMode == 1) {
                         player.maxSpeed = 5f;

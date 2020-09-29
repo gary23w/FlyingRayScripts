@@ -46,25 +46,25 @@ public class LightOperator : MonoBehaviour
 
     private void Move() {
         Vector3 pos = transform.position;
-        pos.x = blockGenerator.position.x;
+        pos.x = UnityEngine.Camera.main.transform.position.x + 30f;
         PlaceLight(pos);
     }
 
     private void PlaceLight(Vector3 pos) {
         if(smallLight) {
             if(blockNumber % 3 == 0) {
-            pos.y = UnityEngine.Random.Range(0.1f, -2.0f);
-            
-        } else {
-            pos.y = UnityEngine.Random.Range(0.1f, 4.0f);
-        }
-        } else {
-            if(blockNumber % 3 != 0) {
-            pos.y = UnityEngine.Random.Range(0.1f, -2.0f);
-            
-        } else {
-            pos.y = UnityEngine.Random.Range(0.1f, 4.0f);
-        }
+                 pos.y = UnityEngine.Random.Range(0.1f, -5.0f);
+                    
+                } else {
+                    pos.y = UnityEngine.Random.Range(0.1f, 7.0f);
+                }
+                } else {
+                    if(blockNumber % 3 != 0) {
+                    pos.y = UnityEngine.Random.Range(0.1f, -5.0f);
+                    
+                } else {
+                    pos.y = UnityEngine.Random.Range(0.1f, 7.0f);
+                }
     }
          transform.position = pos;
 }

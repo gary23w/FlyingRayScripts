@@ -28,7 +28,7 @@ public class CloudMover : MonoBehaviour
         if(collision.tag == "BlockCleaner") {
             Vector3 pos = transform.position;
             pos.x = blockGenerator.position.x;
-            pos.y = Random.Range(-1.0f, 3.0f);
+            pos.y = Random.Range(-1.0f, 7.0f);
 
             moveSpeed.x = Random.Range(-.3f, 0f);
             transform.position = pos;

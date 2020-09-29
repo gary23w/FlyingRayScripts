@@ -11,6 +11,9 @@ public class GameOverPanel : MonoBehaviour
 
     public FloatVariable highScore;
 
+    public FloatVariable hardHighscore;
+    public FloatVariable expertHighScore;
+
     public FloatVariable lightCollected;
 
     public int adcount;
@@ -40,6 +43,8 @@ public class GameOverPanel : MonoBehaviour
 
 
     public Text newHighScoreLabel;
+    public Text newHighScoreLabelHard;
+    public Text newHighScoreLabelExpert;
     bool visible;
     string gameId = "3776473";
     bool testMode = false;
@@ -47,12 +52,32 @@ public class GameOverPanel : MonoBehaviour
     private void Awake() {
         Advertisement.Initialize (gameId, testMode); 
         transform.localScale = Vector3.zero;
+        try{
+             newHighScoreLabelExpert.transform.localScale = Vector3.zero;
+                newHighScoreLabelHard.transform.localScale = Vector3.zero;
+        } catch {
+            Debug.Log("Must Be in Bird Mode");
+        }
+
         score.SetValue(0);
         if(PlayerPrefs.HasKey("HighScore")) {
             highScore.value = PlayerPrefs.GetFloat("HighScore");
         } else {
             PlayerPrefs.SetFloat("HighScore", 0);
         }
+        /// HARD MODE
+          if(PlayerPrefs.HasKey("HighScoreHardMode")) {
+            hardHighscore.value = PlayerPrefs.GetFloat("HighScoreHardMode");
+        } else {
+            PlayerPrefs.SetFloat("HighScoreHardMode", 0);
+        }
+        // EXPERT MODE
+        if(PlayerPrefs.HasKey("HighScoreExpertMode")) {
+            expertHighScore.value = PlayerPrefs.GetFloat("HighScoreExpertMode");
+        } else {
+            PlayerPrefs.SetFloat("HighScoreExpertMode", 0);
+        }
+    
     }
     void FixedUpdate()
     {
@@ -71,14 +96,7 @@ public class GameOverPanel : MonoBehaviour
         
 
         Time.timeScale = 0f;
-        if(hardModeBool.value == true) {
-            hardModeEnabledText.transform.localScale = new Vector3(1,1,1);
-            hardModeBool.value = false;
-        } else if (expertModeBool.value == true) {
-            expertModeEnabledText.transform.localScale = new Vector3(1,1,1);
-            expertModeBool.value = false;
-        }
-
+ 
 
         if(score.value > goldMinScore) {
             medalImage.sprite = goldStar;
@@ -98,6 +116,28 @@ public class GameOverPanel : MonoBehaviour
             highScore.SetValue(score.value);
             PlayerPrefs.SetFloat("HighScore", score.value);
         }
+        if(hardModeBool.value == true) {
+            hardModeEnabledText.transform.localScale = new Vector3(1,1,1);
+            hardModeBool.value = false; 
+
+        if(score.value > hardHighscore.value) {
+                    newHighScoreLabelHard.transform.localScale = new Vector3(1,1,1);
+                    hardHighscore.SetValue(score.value);
+                    PlayerPrefs.SetFloat("HighScoreHardMode", score.value);
+            }
+        } 
+      
+        if (expertModeBool.value == true) {
+            expertModeEnabledText.transform.localScale = new Vector3(1,1,1);
+            expertModeBool.value = false;
+
+        if(score.value > expertHighScore.value) {
+                newHighScoreLabelExpert.transform.localScale = new Vector3(1,1,1);
+                expertHighScore.SetValue(score.value);
+                PlayerPrefs.SetFloat("HighScoreExpertMode", score.value);
+           }
+        }
+     
         transform.localScale = Vector3.one;
 
     }

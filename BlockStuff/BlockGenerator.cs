@@ -35,29 +35,32 @@ private void Awake() {
         largeBlock.GetComponent<Block>().SetBlockNumberAndSpawn(blockNumber, transform, true);
         blockNumber++;
         
-
-
         GameObject lightBlock = GameObject.Instantiate(light);
         light.GetComponent<LightOperator>().SpawnAndSetBlockNumber(lightNumber, transform, true);
         lightNumber++;
         } 
 
-        if(usePlatforms) {
-                        int platformToGenerate = rand.Next(0, platforms.Count);
-                        GameObject platform = GameObject.Instantiate(platforms[platformToGenerate]);
-                        platform.GetComponent<Platform>().SetBlockNumberAndSpawn(blockNumber, transform, true);
-        }
+        generatePlatforms();
+
+
     
 
     for(int i = 0; i < cloudsToGenerate; i++) {
         int cloudsToGenerate = rand.Next(0,clouds.Count);
         GameObject cloud = GameObject.Instantiate(clouds[cloudsToGenerate]);
-        float cloudHeight = Random.Range(0, 15f);
-        float CloudDistance = Random.Range(3.15f, 15f);
+        float cloudHeight = Random.Range(0f, 7f);
+        float CloudDistance = Random.Range(0f, 7f);
 
         cloud.transform.position = new Vector3(CloudDistance, cloudHeight, 0);
         cloud.GetComponent<CloudMover>().SpawnCloud(transform);
     }
 
 }
-}
+        public void generatePlatforms() {
+                if(usePlatforms) {
+                                int platformToGenerate = rand.Next(0, platforms.Count);
+                                GameObject platform = GameObject.Instantiate(platforms[platformToGenerate]);
+                                platform.GetComponent<Platform>().SetBlockNumberAndSpawn(blockNumber, transform, true);
+                }   
+            }
+        }
