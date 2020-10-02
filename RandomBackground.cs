@@ -59,23 +59,30 @@ public class RandomBackground : MonoBehaviour
 
     public void normalMap() {
         for(int i = 0; i < backGroundImages.Length; i++) {
-            backGroundImages[i].GetComponent<RawImage>().color = Color.white;
-            gameBackground[i].GetComponent<RawImage>().color = Color.white;
+            backGroundImages[i].GetComponent<RawImage>().color = Color.Lerp(backGroundImages[i].GetComponent<RawImage>().color, Color.white, Time.deltaTime * 2);
+            gameBackground[i].GetComponent<RawImage>().color = Color.Lerp(gameBackground[i].GetComponent<RawImage>().color, Color.white, Time.deltaTime * 2);
             Debug.Log("background objects" + backGroundImages[i].ToString() + "colors. are now game default pattern.");
         }
     }
 
         IEnumerator changeBackgroundColor() {
             yield return new WaitForSeconds(8);
-            if(keeptrack <= 30) {
+            if(keeptrack <= 29) {
                 randomColorMap();
                 keeptrack += 1;
                 Debug.Log("changing backgrounds keep track" + keeptrack.ToString());
                 StartCoroutine(changeBackgroundColor());
             } else {
-                Debug.Log("Night time simulated");
+                Debug.Log("Night time simulateda, now turning on the lights");
+                StartCoroutine(lightsOn());
             }
             
+        }
+        IEnumerator lightsOn() {
+            yield return new WaitForSeconds(5);
+            normalMap();
+            randomColorMap();
+            keeptrack = 0;
         }
 
     public void changeMap() {
